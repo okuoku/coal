@@ -20,7 +20,26 @@ typedef enum coal_enum_e coal_enum;
 typedef enum coal_ctx_enum_e coal_ctx_enum;
 typedef enum coal_effect_type_e coal_effect_type;
 typedef enum coal_filter_type_e coal_filter_type;
-typedef enum coal_phoneme_e coal_phoneme;
+typedef enum coal_advreverb_param_e coal_advreverb_param;
+typedef enum coal_reverb_param_e coal_reverb_param;
+typedef enum coal_chorus_param_e coal_chorus_param;
+typedef enum coal_chorus_waveform_e coal_chorus_waveform;
+typedef enum coal_distortion_param_e  coal_distortion_param;
+typedef enum coal_flanger_param_e coal_flanger_param;
+typedef enum coal_flanger_waveform_e coal_flanger_waveform;
+typedef enum coal_echo_param_e coal_echo_param;
+typedef enum coal_frequency_shifter_param_e coal_frequency_shifter_param;
+typedef enum coal_vocal_morpher_param_e coal_vocal_morpher;
+typedef enum coal_vocal_morpher_phoneme_e coal_vocal_morpher_phoneme;
+typedef enum coal_pitch_shifter_param_e coal_pitch_shifter_param;
+typedef enum coal_ring_modulator_param_e coal_ring_modulator;
+typedef enum coal_autowah_param_e coal_autowah_param;
+typedef enum coal_compressor_param_e coal_compressor_param;
+typedef enum coal_equalizer_param_e coal_equalizer_param;
+typedef enum coal_filter_type_e coal_filter_type;
+typedef enum coal_lowpass_param_e coal_lowpass_param;
+typedef enum coal_highpass_param_e coal_highpass_param;
+typedef enum coal_bandpass_param_e coal_bandpass_param;
 
 enum coal_boolean_e {
     COAL_FALSE = 0,
@@ -215,52 +234,118 @@ COAL_API coal_query_result coal_getParameter_ctx0_i1(coal_device* deviceHandle,
                                                      int* i0);
 
 /* Effects Extension (Standard + EAX) */
+struct coal_AuxiliaryEffectSlot_s;
+struct coal_Effect_s;
+struct coal_Filter_s;
+typedef struct coal_AuxiliaryEffectSlot_s coal_AuxiliaryEffectSlot;
+typedef struct coal_Effect_s coal_Effect;
+typedef struct coal_Filter_s coal_Filter;
+COAL_API void coal_AuxiliaryEffectSlot_release(coal_ctx* ctx,
+                                               coal_AuxiliaryEffectSlot* obj);
+COAL_API void coal_Effect_release(coal_ctx* ctx, coal_Effect* effect);
+COAL_API void coal_Filter_release(coal_ctx* ctx, coal_Effect* filter);
+
 /* Auxiliary Effect Slot Object */
 /* Management Functions */
-struct coal_AuxiliaryEffectSlot_s;
-typedef struct coal_AuxiliaryEffectSlot_s coal_AuxiliaryEffectSlot;
 COAL_API coal_AuxiliaryEffectSlot* coal_createAuxiliaryEffectSlot(coal_ctx* ctx);
 COAL_API void coal_deleteAuxiliaryEffectSlot(coal_ctx* ctx,
                                              coal_AuxiliaryEffectSlot* obj);
-COAL_API void coal_AuxiliaryEffectSlot_release(coal_ctx* ctx,
-                                               coal_AuxiliaryEffectSlot* obj);
 /* Property Functions */
 COAL_API void coal_auxiliaryEffectSlotParameter_b1(coal_ctx* ctx,
                                                    coal_AuxiliaryEffectSlot* obj,
+                                                   coal_enum paramName,
                                                    coal_bool b0);
-COAL_API void coal_auxiliaryEffectSlotParameter_effect(coal_ctx* ctx,
-                                                       coal_AuxiliaryEffectSlot* obj,
-                                                       coal_Effect* effect);
 COAL_API void coal_auxiliaryEffectSlotParameter_f1(coal_ctx* ctx,
                                                    coal_AuxiliaryEffectSlot* obj,
+                                                   coal_enum paramName,
                                                    float f0);
+COAL_API void coal_auxiliaryEffectSlotParameter_effect(coal_ctx* ctx,
+                                                       coal_AuxiliaryEffectSlot* obj,
+                                                       coal_enum paramName,
+                                                       coal_Effect* effect);
 
 /* Query Property Functions */
 COAL_API coal_query_result coal_getAuxiliaryEffectSlotParameter_b1(coal_ctx* ctx,
                                                                    coal_AuxiliaryEffectSlot* obj,
+                                                                   coal_enum paramName,
                                                                    coal_bool* b0);
-COAL_API coal_query_result coal_getAuxiliaryEffectSlotParameter_effect(coal_ctx* ctx,
-                                                                       coal_AuxiliaryEffectSlot* obj,
-                                                                       coal_Effect** effect);
 COAL_API coal_query_result coal_getAuxiliaryEffectSlotParameter_f1(coal_ctx* ctx,
                                                                    coal_AuxiliaryEffectSlot* obj,
+                                                                   coal_enum paramName,
                                                                    float* f0);
+COAL_API coal_query_result coal_getAuxiliaryEffectSlotParameter_effect(coal_ctx* ctx,
+                                                                       coal_AuxiliaryEffectSlot* obj,
+                                                                       coal_enum paramName,
+                                                                       coal_Effect** effect);
 
 /* Effect Object */
 /* Management Functions */
-struct coal_Effect_s;
-typedef struct coal_Effect_s coal_Effect;
 COAL_API coal_Effect* coal_createEffect(coal_ctx* ctx);
 COAL_API void coal_deleteEffect(coal_ctx* ctx, coal_Effect* effect);
-COAL_API void coal_Effect_release(coal_ctx* ctx, coal_Effect* effect);
 
 /* Property Functions */
+COAL_API void coal_effectParameter_b1(coal_ctx* ctx, coal_Effect* obj,
+                                      int paramName, coal_boolean b0);
+COAL_API void coal_effectParameter_i1(coal_ctx* ctx, coal_Effect* obj,
+                                      int paramName, int i0);
+COAL_API void coal_effectParameter_f1(coal_ctx* ctx, coal_Effect* obj,
+                                      int paramName, float f0);
+COAL_API void coal_effectParameter_f3(coal_ctx* ctx, coal_Effect* obj,
+                                      int paramName, float f0);
+
 /* Query Property Functions */
+COAL_API coal_query_result coal_getEffectParameter_b1(coal_ctx* ctx,
+                                                      coal_Effect* obj,
+                                                      int paramName,
+                                                      coal_boolean* b0);
+COAL_API coal_query_result coal_getEffectParameter_i1(coal_ctx* ctx,
+                                                      coal_Effect* obj,
+                                                      int paramName,
+                                                      int* i0);
+COAL_API coal_query_result coal_getEffectParameter_f1(coal_ctx* ctx,
+                                                      coal_Effect* obj,
+                                                      int paramName,
+                                                      float* f0);
+COAL_API coal_query_result coal_getEffectParameter_f3(coal_ctx* ctx,
+                                                      coal_Effect* obj,
+                                                      int paramName,
+                                                      float* f0, float* f1,
+                                                      float* f2);
 
+/* Filter Object */
+/* Management Functions */
+COAL_API coal_Filter* coal_createFilter(coal_ctx* ctx);
+COAL_API void coal_deleteFilter(coal_ctx* ctx, coal_Filter* filter);
 
+/* Property Functions */
+COAL_API void coal_filterParameter_b1(coal_ctx* ctx, coal_Filter* obj,
+                                      int paramName, coal_boolean b0);
+COAL_API void coal_filterParameter_i1(coal_ctx* ctx, coal_Filter* obj,
+                                      int paramName, int i0);
+COAL_API void coal_filterParameter_f1(coal_ctx* ctx, coal_Filter* obj,
+                                      int paramName, float f0);
 
+/* Query Property Functions */
+COAL_API coal_query_result coal_getFilterParameter_b1(coal_ctx* ctx,
+                                                      coal_Filter* obj,
+                                                      int paramName,
+                                                      coal_boolean* b0);
+COAL_API coal_query_result coal_getFilterParameter_i1(coal_ctx* ctx,
+                                                      coal_Filter* obj,
+                                                      int paramName,
+                                                      int* b0);
+COAL_API coal_query_result coal_getFilterParameter_f1(coal_ctx* ctx,
+                                                      coal_Filter* obj,
+                                                      int paramName,
+                                                      float* b0);
 
-
+/* Source Object Extensions */
+COAL_API void coal_sourceParameter_filter(coal_ctx* ctx,
+                                          coal_enum paramName,
+                                          coal_filter* filter);
+COAL_API void coal_getSourceParameter_filter(coal_ctx* ctx,
+                                             coal_enum paramName,
+                                             coal_filter** filter);
 /* { */
 #ifdef __cplusplus
 };
